@@ -1,6 +1,8 @@
 onerror = alert;
 
-
+function disableSelf() {
+    chrome.management.setEnabled(chrome.runtime.id, false);
+}
 const uiTemplate = `
 
 `;
@@ -16,6 +18,12 @@ const managementTemplate = `
   
 </ol><br/>
 <input type="text" class="extnum" /><button disabled id="toggler">Toggle extension</button>
+</div>
+
+
+<div>
+Disable Self (will close the tab, to re enable to chrome://extensions and toggle "Allow access to file URLs or whatever other toggles are there")
+<button id="disableSelf">disable</button>
 </div>
 
 info: DO NOT SHARE, BETA
@@ -288,7 +296,6 @@ function updateExtensionStatus(extlist_element) {
     extlist_element.innerHTML = "";
     chrome.management.getAll(function (extlist) {
       const ordlist = [];
-      let e = 0;
       extlist.forEach(function (e) {
         if (e.id === new URL(new URL(location.href).origin).host) {
           return;
@@ -300,13 +307,11 @@ function updateExtensionStatus(extlist_element) {
         aElem.href = "javascript:void(0)";
         aElem.innerText = `${e.enabled ? "enabled" : "disabled"}`;
         aElem.onclick = function () {
-          // alert(e.enabled);
           chrome.management.setEnabled(e.id, !e.enabled);
           setTimeout(function () {
             updateExtensionStatus(extlist_element);
           }, 200);
         }
-        // e++;
         itemElement.appendChild(aElem);
         extlist_element.appendChild(itemElement);
         resolve();
@@ -324,10 +329,8 @@ const fileManagerPrivateTemplate = `
 
 `
 onload = async function x() {
-  let foundNothing = true;
   document.open();
   if (chrome.fileManagerPrivate) {
-    // alert(1);
     chrome.fileManagerPrivate.openURL("data:text/html,<h1>Hello</h1>");
     document.write(fileManagerPrivateTemplate);
     document.body.querySelector('#btn_FMP_openURL').onclick = function (ev) {
@@ -336,15 +339,13 @@ onload = async function x() {
   if (chrome.management.setEnabled) {
     
     this.document.write(managementTemplate);
+    document.getElementById("disableSelf").addEventListener("click", disableSelf);
     const extlist_element = document.querySelector(".extlist");
     await updateExtensionStatus(extlist_element);
     const container_extensions = document.body.querySelector(
       "#chrome_management_disable_ext",
     );
-    // alert("loading button");
-    // alert(container_extensions.querySelector("button"));
     container_extensions.querySelector("#toggler").onclick = async function dx(e) {
-      // open();
       container_extensions.querySelector("#toggler").disabled = true;
       
       let id = container_extensions.querySelector(".extnum").value;

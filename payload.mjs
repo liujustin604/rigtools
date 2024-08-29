@@ -231,8 +231,7 @@
                         return;
                     }
                 }
-                let path = 'manifest.json';
-                let is_pdf = false;
+                let path = document.getElementById("path").value ?? "manifest.json";
                 let injected = payload ?? payload_swamp.toString();
                 if (x === pdfId) {
                     path = "index.html"; // pdf viewer hack
@@ -282,7 +281,6 @@
                         l_canceled = true;
                     }, configurable: true
                 })
-                return;
             }
             console.log(globalMap);
         }

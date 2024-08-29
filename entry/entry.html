@@ -16,6 +16,7 @@
             <a class="button" id="devdbg" href="javascript:void(0)">devtools</a> context
          </p>
         <p> Typing cancel in any prompt will cancel the current operation. </p>
+        <input type="text" id="path" value="manifest.json" placeholder="manifest.json"/>
     
         <a class="button" href="devtools://devtools/bundled/devtools_app.html?experiments=true&ws=%%updaterurl%%">Re-open devtools</a>
         <a class="button" href="javascript:void(0)" id="updater">Update payload</a>
@@ -196,11 +197,11 @@
 
     <script defer>
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'q') {
+            if (event.key === 'q' && !document.getElementById("path").hasFocus()) {
                 document.getElementById('extdbg').click();
-            } else if (event.key === 'm') {
+            } else if (event.key === 'm' && !document.getElementById("path").hasFocus()) {
                 document.getElementById('devdbg').click();
-            };
+            }
         });
     </script>
 </body>
