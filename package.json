@@ -15,6 +15,6 @@
     "readline-sync": "^1.4.10",
     "rigtools": "file:",
     "serve-static": "^1.15.0",
-    "ws": "^8.17.0"
+    "ws": "8.18.0"
   }
 }

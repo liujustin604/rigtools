@@ -1,0 +1,81 @@
+
+body {
+    background-color:#1e2030;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+}
+
+.grid {
+    flex-grow: 1;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    gap: 1.5rem;
+    grid-template-areas: 
+    "a b c"
+    "d e ."
+    "f f f";
+    justify-content: center;
+    align-items: center;
+    grid-template-rows: auto auto 1fr;
+}
+
+.txtinput {
+    height: 100%;
+    border: none;
+    background: blue;
+    border-radius: 0.75rem;
+    color: white;
+    padding: 1rem;
+}
+.txtinput:focus {
+    border: none;
+}
+
+.txtinput::selection {
+    background: lightblue;
+}
+
+iframe {
+    display: none;
+}
+
+.txtinput::placeholder {
+    color: white;
+}
+.btn:hover {
+    background-image: linear-gradient(rgb(0 0 0/40%) 0 0);
+    
+}
+.btn {
+    border: none;
+    background: lightgreen;
+    background-image: none;
+    border-radius: 0.75rem;
+    height: 3rem;
+}
+
+.main {
+    width: clamp(min(25rem, 100%), 60%, 50rem);
+    height: clamp(min(25rem, 100%), 60%, 50rem);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 3px solid white;
+    font-weight: bold;
+    padding: 5%;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #24273a;
+}
