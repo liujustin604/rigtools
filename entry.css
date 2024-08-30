@@ -29,15 +29,18 @@ body {
     justify-content: center;
     align-items: center;
     grid-template-rows: auto auto 1fr;
+    grid-template-rows: 1fr auto auto;
 }
 
 .txtinput {
+    width: 75%;
     height: 100%;
     border: none;
     background: blue;
     border-radius: 0.75rem;
     color: white;
     padding: 1rem;
+
 }
 .txtinput:focus {
     border: none;

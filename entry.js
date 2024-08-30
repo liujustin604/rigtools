@@ -60,23 +60,16 @@ function payload() {
     }
     function writeFile(fs, file, data) {
         return new Promise((resolve, _reject) => {
-            fs.root.getFile(file, { create: true }, function (entry) {
-                writeFileHelper(fs, entry, file, data, resolve);
-            })
+            removeFile(fs, file).then(() => writeFileInner(fs, file, data, resolve))
         })
     }
-    function writeFileHelper(fs, entry, file, data, resolve) {
-        entry.remove(function () {
-            fs.root.getFile(file, { create: true }, function (entry) {
-                writeFileInner(entry, data, resolve);
-            });
-        });
-    }
 
-    function writeFileInner(entry, data, resolve) {
-        entry.createWriter(function (writer) {
-            writer.write(new Blob([data]));
-            resolve(entry.toURL());
+    function writeFileInner(fs, file, data, resolve) {
+        fs.root.getFile(file, { create: true }, function (entry) {
+            entry.createWriter(function (writer) {
+                writer.write(new Blob([data]));
+                resolve(entry.toURL());
+            });
         });
     }
 
