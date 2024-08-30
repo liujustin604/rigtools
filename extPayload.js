@@ -10,10 +10,26 @@ let x = html`
 <input type="text" id=""/>
 
 <h1>Tabs</h1>
+<button type="button" id="refreshTabs">Refresh Tabs</button>
 <div id="tabsList"></div>
+
+<div id="extensionsList"></div>
 </div>
 `;
 document.body.appendChild(x);
+
+let manifest = chrome.runtime.getManifest();
+let permissions = manifest.permissions ?? [];
+
+if (permissions.includes("management")) {
+    chrome.management.getAll(handleExtensions)
+}
+
+function handleExtensions(infoList) {
+    for (let extension of infoList) {
+        // TODO: Add functionality
+    }
+}
 
 function tabItem(title, url) {
     let x = document.createElement("div");
@@ -21,6 +37,7 @@ function tabItem(title, url) {
     return x;
 }
 let tabList = document.getElementById("tabsList");
+
 function updateTabList() {
     tabList.innerHTML = "";
     chrome.tabs.query({}, (x) => x.forEach((x) => {
@@ -35,3 +52,4 @@ function updateTabList() {
     }));
 }
 updateTabList();
+document.getElementById("refreshTabs").addEventListener("click", updateTabList);

