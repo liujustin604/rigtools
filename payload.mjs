@@ -22,16 +22,20 @@ function sleep(ms) {
 }
 
 async function load(w) {
-    let doc = w.document;
-    let c = w.console;
-    c.clear();
-    c.log("Removing old content");
-    doc.open();
-    doc.write();
-    doc.close();
-    c.log("Initializing Page");
-    await w.loadRemoteScript(doc, w, "https://unpkg.com/dreamland");
-    w.loadScript(doc, atob(`%%SCRIPT%%`));
+    try {
+        let doc = w.document;
+        let c = w.console;
+        c.clear();
+        c.log("Removing old content");
+        doc.open();
+        doc.write();
+        doc.close();
+        c.log("Initializing Page");
+        w.loadScript(doc, atob(`%%DREAMLANDJS%%`));
+        w.loadScript(doc, atob(`%%SCRIPT%%`));
+    } catch (err) {
+        c.error(err);
+    }
 }
 
 function loadScript(doc, script) {

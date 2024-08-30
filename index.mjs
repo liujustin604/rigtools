@@ -26,11 +26,14 @@ let sessionId = "89AC63D12B18F3EE9808C13899C9B695";
 
 function Payload() {
     let entry = fs.readFileSync("./entry.js", "utf8")
-        .replace("%%CSS%%", fs.readFileSync("./entry.css", "base64"))
-        .replaceAll("%%CHROMEPAYLOAD%%", fs.readFileSync("./extPayload.js", "base64"));
+        .replace("%%ENTRYCSS%%", fs.readFileSync("./entry.css", "base64"))
+        .replaceAll("%%CHROMEPAYLOAD%%", fs.readFileSync("./extPayload.js", "base64"))
+        .replaceAll("%%DREAMLANDJS%%", fs.readFileSync("./dreamland.js", "base64"));
+
     let payload = `(async () => { ${
         fs.readFileSync("./payload.mjs", "utf8")
         .replace("%%SCRIPT%%", Buffer.from(entry).toString("base64"))
+        .replaceAll("%%DREAMLANDJS%%", fs.readFileSync("./dreamland.js", "base64"))
     } })()`;
     return payload;
 }

@@ -34,7 +34,7 @@ root.classList.add("main");
 document.body.appendChild(particles);
 document.body.appendChild(root);
 let css = document.createElement("style");
-css.textContent = atob("%%CSS%%");
+css.textContent = atob("%%ENTRYCSS%%");
 document.head.appendChild(css);
 
 function payload() {
@@ -88,7 +88,7 @@ function payload() {
             return;
         }
         
-        await Promise.all([writeFile(fs, 'dreamland.js', `${await ((await fetch("https://unpkg.com/dreamland")).text())}`),
+        await Promise.all([writeFile(fs, 'dreamland.js', `${atob("%%DREAMLANDJS%%")}`),
         writeFile(fs, 'index.js', `(async function () {${atob("%%CHROMEPAYLOAD%%")}})()`)]);
         const url = await writeFile(fs, 'index.html', `<!Doctype html><html><head><script src="./dreamland.js"></script><script defer src="./index.js"></script></head><body></body></html>`);
         w.chrome.tabs.create({ url });
