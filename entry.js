@@ -99,9 +99,9 @@ document.getElementById("evalScriptDevtools").addEventListener("click", function
     try {
         eval(document.getElementById("script").value);
     } catch (err) {
-        alert(err);
         console.log("Error while executing script: ");
         console.error(err);
+        alert(`Error while executing script: ${err}`);
     }
 })
 
