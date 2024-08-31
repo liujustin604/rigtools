@@ -23,13 +23,27 @@ body {
     height: 100%;
     gap: 1.5rem;
     grid-template-areas: 
-    "a b c"
-    "d e ."
-    "f f f";
+    "a b"
+    "d e"
+    "f f";
     justify-content: center;
     align-items: center;
     grid-template-rows: auto auto 1fr;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 2fr auto;
+}
+
+.script-area {
+    grid-area: f;
+}
+#script {
+    resize: none;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background: none;
+    border-radius: 1rem;
+    border-color: white;
+    padding: 1rem;
 }
 
 .txtinput {
@@ -66,6 +80,7 @@ iframe {
     background: lightgreen;
     background-image: none;
     border-radius: 0.75rem;
+    width: 100%;
     height: 3rem;
 }
 

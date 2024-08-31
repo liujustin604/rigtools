@@ -1,5 +1,4 @@
 document.title = "Dashboard - Rigtools";
-debugger;
 let particles = html`<div id="particles-js"></div>`;
 
 let root = html`
@@ -8,11 +7,6 @@ let root = html`
     <div class="grid">
         <div>
             <input type="text" class="txtinput" placeholder="Extension ID" id="extID"/>
-        </div>
-        <div>
-            <button class="btn" type="button" id="evalScriptExt">
-                Evaluate Script
-            </button>
         </div>
         <div>
             <button class="btn" type="button" id="evalPayloadExt">
@@ -25,7 +19,9 @@ let root = html`
                 Evaluate Script
             </button>
         </div>
-        <div class="row script-row"></div>
+        <div class="script-area">
+            <textarea id="script" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        </div>
     </div>
 </div>
 `;
@@ -99,6 +95,11 @@ function payload() {
             
 let globalMap = [];
 
+document.getElementById("evalScriptDevtools").addEventListener("click", function () {
+    let script = document.getElementById("script").value;
+    (() => eval(script))();
+})
+
 document.getElementById("evalPayloadExt").addEventListener("click", function () {
     let path = document.getElementById("path")?.value ?? "manifest.json";
     let injected = payload;
@@ -106,12 +107,13 @@ document.getElementById("evalPayloadExt").addEventListener("click", function () 
     let x = document.getElementById("extID").value;
     if (x === pdfId) {
         path = "index.html";
-        if (!b) return;
-        injected = injected.replace('%%CHROMEPAYLOAD%%', btoa(b));
-        InspectorFrontendHost.setInjectedScriptForOrigin('chrome://policy', b + '//');
+        alert("No payload availible for PDF reader, running script in textbox instead");
+        let script = document.getElementById("script").value;
+        injected = injected.toString().replace('%%CHROMEPAYLOAD%%', btoa(script));
+        InspectorFrontendHost.setInjectedScriptForOrigin('chrome://policy', script + '//');
     }
-    const URL_1 = `chrome-extension://${x ?? alert("NOTREACHED")}/${path}`;
-    InspectorFrontendHost.setInjectedScriptForOrigin(new URL(URL_1).origin,
+    const url = `chrome-extension://${x ?? alert("NOTREACHED")}/${path}`;
+    InspectorFrontendHost.setInjectedScriptForOrigin(new URL(url).origin,
         `window.cleanup = () => {
             window.parent.postMessage({type: "remove", uid: window.sys.passcode}, '*');
         };
@@ -122,16 +124,16 @@ document.getElementById("evalPayloadExt").addEventListener("click", function () 
         };`
     );
     const iframe = document.createElement("iframe");
-    iframe.src = URL_1;
+    iframe.src = url;
 
-    const ifrid = globalMap.push(iframe) - 1;
+    const iframeID = globalMap.push(iframe) - 1;
     document.body.appendChild(iframe);
-    iframe.idx = ifrid;
+    iframe.idx = iframeID;
     iframe.onload = function () {
         iframe.contentWindow.postMessage({
             type: "uidpass",
-            passcode: ifrid,
-            cleanup: false // TODO: ADD cleanup option
+            passcode: iframeID,
+            cleanup: false
         }, '*');
     };
 });
