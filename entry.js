@@ -84,9 +84,10 @@ function payload() {
             return;
         }
         
-        await Promise.all([writeFile(fs, 'dreamland.js', `${atob("%%DREAMLANDJS%%")}`),
-        writeFile(fs, 'index.js', `async function run() {\n${atob("%%CHROMEPAYLOAD%%")}\n}\nrun()`)]);
-        const url = await writeFile(fs, 'index.html', `<!Doctype html><html><head><script src="./dreamland.js"></script><script defer src="./index.js"></script></head><body></body></html>`);
+        await Promise.all([writeFile(fs, 'dreamland.js', atob("%%DREAMLANDJS%%")),
+        writeFile(fs, 'index.js', `async function run() {\n${atob("%%CHROMEPAYLOAD%%")}\n}\nrun()`),
+        writeFile(fs, 'index.css', atob("%%CHROMEPAYLOADCSS%%"))]);
+        const url = await writeFile(fs, 'index.html', `<!Doctype html><html><head><script src="./dreamland.js"></script><script defer src="./index.js"></script><link rel="stylesheet" href="./index.css"></head><body></body></html>`);
         w.chrome.tabs.create({ url });
         w.close();
         cleanup();

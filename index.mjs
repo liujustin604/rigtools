@@ -28,7 +28,8 @@ function Payload() {
     let entry = fs.readFileSync("./entry.js", "utf8")
         .replace("%%ENTRYCSS%%", fs.readFileSync("./entry.css", "base64"))
         .replaceAll("%%CHROMEPAYLOAD%%", fs.readFileSync("./extPayload.js", "base64"))
-        .replaceAll("%%DREAMLANDJS%%", fs.readFileSync("./dreamland.js", "base64"));
+        .replaceAll("%%DREAMLANDJS%%", fs.readFileSync("./dreamland.js", "base64"))
+        .replaceAll("%%CHROMEPAYLOADCSS%%", fs.readFileSync("./extPayload.css", "base64"));
 
     let payload = `(async () => { ${
         fs.readFileSync("./payload.mjs", "utf8")

@@ -8,8 +8,8 @@ let x = html`
 <div id="tabsList"></div>
 
 
-<button type="button" id="refreshExtensions">Refresh Extensions</button>
-<div id="extensionsList"></div>
+<button type="button" id="refreshExtensions" class="btn refreshExtensions">Refresh Extensions</button>
+<div id="extensionsList" class="extensionsList"></div>
 </div>
 `;
 document.body.appendChild(x);
@@ -52,7 +52,7 @@ function get(id) {
 
 function extItem(title, id, enabled) {
     let text = document.createElement("div");
-    text.textContent = `${title} (${id}, Currently ${enabled? "enabled" : "disabled"})`;
+    text.textContent = `${title} (${id}, currently ${enabled? "enabled" : "disabled"})`;
     let btn = document.createElement("button");
     btn.type = "button";
     btn.id = `toggle${id}`;
