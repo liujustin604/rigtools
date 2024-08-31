@@ -21,9 +21,10 @@ $ npm start
   - Script passed to extension to run code, such as disabling extensions.
 - Chrome URLs
   - Elevated URLs that have extra access to features such as WebUI.
-  - Only modify the entrypoint when necessary. If not modified properly, thigns such as the updater will break, do not remove any buttons and reuse ids.
+  - Only modify the entrypoint when necessary. If not modified properly, things such as the updater will break, do not remove any buttons and reuse ids.
 
 ## Release information
+- #### Whole Project rewrite
 - Release 0.0.1
   - This release contains the following things:
     - Updater
