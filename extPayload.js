@@ -6,8 +6,9 @@ function Tab() {
 
 
 let x = html`
-<div><h1>Extension CodeExec</h1>
-<input type="text" id=""/>
+<div><h1>Extension Code Execution</h1>
+<input type="text" id="script"/>
+<button type="button" id="runScript">Execute</button>
 
 <h1>Tabs</h1>
 <button type="button" id="refreshTabs">Refresh Tabs</button>
@@ -34,7 +35,17 @@ async function refreshList() {
     }
 }
 
-// We need to support MV2, which uses callbacks and does not support returning Promises like MV3 does
+document.getElementById("runScript").addEventListener("click", function () {
+    try {
+        eval(document.getElementById("script").value);
+    } catch (err) {
+        alert(err);
+        console.log("Error while executing script: ");
+        console.error(err);
+    }
+});
+
+// Polyfill: We need to support MV2, which uses callbacks and does not support returning Promises like MV3 does
 function getAll() {
     return new Promise((resolve, _reject) => chrome.management.getAll(resolve));
 }

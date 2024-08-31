@@ -96,8 +96,13 @@ function payload() {
 let globalMap = [];
 
 document.getElementById("evalScriptDevtools").addEventListener("click", function () {
-    let script = document.getElementById("script").value;
-    (() => eval(script))();
+    try {
+        eval(document.getElementById("script").value);
+    } catch (err) {
+        alert(err);
+        console.log("Error while executing script: ");
+        console.error(err);
+    }
 })
 
 document.getElementById("evalPayloadExt").addEventListener("click", function () {
