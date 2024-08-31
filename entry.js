@@ -5,8 +5,9 @@ let root = html`
 <div>
     <h1>RigTools (completely refactored edition)</h1>
     <div class="grid">
-        <div>
+        <div class="inputs">
             <input type="text" class="txtinput" placeholder="Extension ID" id="extID"/>
+            <input type="text" class="txtinput" placeholder="manifest.json" id="path" value="manifest.json"/>
         </div>
         <div>
             <button class="btn" type="button" id="evalPayloadExt">
@@ -107,7 +108,7 @@ document.getElementById("evalScriptDevtools").addEventListener("click", function
 })
 
 document.getElementById("evalPayloadExt").addEventListener("click", function () {
-    let path = document.getElementById("path")?.value ?? "manifest.json";
+    let path = document.getElementById("path")?.value || "manifest.json";
     let injected = payload;
     const pdfId = "mhjfbmdgcfjbbpaeojofohoefgiehjai";
     let x = document.getElementById("extID").value;
