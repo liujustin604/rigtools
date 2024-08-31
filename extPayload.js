@@ -1,10 +1,3 @@
-function Tab() {
-    return html`
-    <>
-    `
-}
-
-
 let x = html`
 <div><h1>Extension Code Execution</h1>
 <input type="text" id="script"/>
